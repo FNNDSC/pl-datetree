@@ -57,8 +57,7 @@ def main(options: Namespace, inputdir: Path, outputdir: Path):
     """
     start_date = options.startdate
     end_date = options.enddate
-    print(DISPLAY_TITLE)
-    test_dateTreeBuild()
+    dateTreeBuild(start_date, end_date, outputdir)
 
 
 def dateTreeBuild(start_date, end_date, outputdir):
@@ -71,14 +70,14 @@ def dateTreeBuild(start_date, end_date, outputdir):
         start = datetime.strptime(start_date, '%Y%m%d')
         end = datetime.strptime(end_date, '%Y%m%d')
     except Exception as e:
-        print("Hmmm... it seems either the start or end dates are invalid. Please check and try again.")
-        sys.exit(1)
+        return "Error: Either the start or end dates do not exist"
+
     
     #Datetime library should calculate the total difference in days
     total_days:int = (end - start).days + 1
 
     if(total_days <= 0):
-        print("The end date seems to be _before_ the start date. No output created.")
+        return "Error: The end date is before the start date."
 
     current_date = start
     for i in range(1, total_days + 1):
@@ -96,23 +95,10 @@ def dateTreeBuild(start_date, end_date, outputdir):
             file.write(f"File created at: {directory_path}\n")
 
         current_date += timedelta(days=1)
-def test_dateTreeBuild():
 
-    print("Test1: Valid Date Range")
-    dateTreeBuild('20230101', '20230105', 'test_dir1')
+    return ("File successfully created")
 
-    print("\nTest 2: End Date Before Start Date")
-    dateTreeBuild('20220105', '20220101', 'test_dir2')
 
-    print("\nTest 3:Invalid Date Format")
-    try:
-        dateTreeBuild('2022-01-01', '20220105', 'test_dir3')
-    except SystemExit as e:
-        print("Caught an expected  SystemExit due to invalid date format")
-
-    print("\nTest 4: Same Start and End Date")
-    dateTreeBuild('20220101', '20220101', 'test_dir4')
-    
 
 if __name__ == '__main__':
    main()

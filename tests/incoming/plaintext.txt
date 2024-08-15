@@ -1,0 +1,1 @@
+hello ChRIS, I am a ChRIS plugin

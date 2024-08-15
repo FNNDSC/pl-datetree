@@ -1,6 +1,8 @@
 from pathlib import Path
 
-from mdharvester import parser, main
+from mdharvester import parser, main, dateTreeBuild
+
+import os
 
 
 def test_main(tmp_path: Path):
@@ -20,6 +22,7 @@ def test_main(tmp_path: Path):
     assert expected_output_file.exists()
     assert expected_output_file.read_text() == '2'
 
+
 def test_expected_date_format():
     #tests a standard input
     result = dateTreeBuild('20200101', '20200105', 'test_dir5')
@@ -33,11 +36,13 @@ def test_alternative_date_format():
     expected = "File successfully created"
     assert result == expected, f"Expected '{expected}', but got '{result}'"
 
+
 def test_non_existent_dates():
     #tests if the user entered date that does not exist
     result = dateTreeBuild('20211312', '20211232', 'test_dir7')
     expected = "Error: Either the start or end dates do not exist"
     assert result == expected, f"Expected '{expected}', but got '{result}'"
+
 
 def test_start_after_end_dates():
     #tests if the user entered date that does not exist
@@ -46,9 +51,16 @@ def test_start_after_end_dates():
     assert result == expected, f"Expected '{expected}', but got '{result}'"
 
 
+#I dont need this function anymore
 def test_successful_file_creation():
     result = dateTreeBuild('20220101', '20220105', 'test_dir9')
     expected = "File successfully created"
     assert result == expected, f"Expected '{expected}', but got '{result}'"
+    if (result == expected):
+        print("Shit is true")
 
+
+if __name__ == '__main__':
+#test_main(Path('C:/Users/Vai.Mathi/OneDrive/Documents/BCH Work/pl-datetree/tests'))
+    test_successful_file_creation()
 
