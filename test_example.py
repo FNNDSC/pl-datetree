@@ -56,11 +56,13 @@ def test_successful_file_creation():
     result = dateTreeBuild('20220101', '20220105', 'test_dir9')
     expected = "File successfully created"
     assert result == expected, f"Expected '{expected}', but got '{result}'"
-    if (result == expected):
-        print("Shit is true")
+
 
 
 if __name__ == '__main__':
-#test_main(Path('C:/Users/Vai.Mathi/OneDrive/Documents/BCH Work/pl-datetree/tests'))
+    test_expected_date_format()
+    test_alternative_date_format()
+    test_non_existent_dates()
+    test_start_after_end_dates()
     test_successful_file_creation()
 
